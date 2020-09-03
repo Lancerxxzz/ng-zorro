@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正则表达式</title>
+</head>
+
+<body>
+    <div class="content">
+        houdunren.com
+    </div>
+    <input type="text" name='username'>
+    <p></p>
+    <script>
+        let hd = 'houdunren2200hdcms9988';
+        console.log(hd.match(/\d/g).join("")); /* 截取数字 */
+        let hd1 = 'houdunren.com'
+        console.log(/u/.test(hd1)); /* 检测是否存在要查找的数 */
+
+        /* let reg = new RegExp("u", "g"); */
+        /*使用对象创建正则表达式  */
+        /* console.log(reg.test(hd)); */
+        let con = prompt('请输入要检测的内容，支持正则'); /* 页面初始化弹窗 */
+        var div = document.querySelector('.content');
+        let reg = new RegExp(con, "g");
+        div.innerHTML = div.innerHTML.replace(reg, search => {
+            return `<span style='color:red'>${search}</span>`;
+        }) /* 输入相同的字符 改变style */
+
+        let price = 23.32;
+        /* 1.  . 除换行外任何字符 */
+        console.log(/\d+\./);
+        console.log("\\d+\\.+\\d");
+
+        let url = "http://www.houdunren.com";
+        console.log(/http?:\/\/\w+\.\w+\.\w+/.test(url));
+
+        let confirm = new RegExp(/^[A-Z]\w{7,9}$/)
+        let username = document.querySelector("input");
+        username.addEventListener('keydown ', () => {
+                console.log(confirm.test(username.value));
+                console.log(username.value);
+            })
+            /*  截取字符转为数组*/
+        let jiequ = `
+         #1 js,200元 #
+        #2 js,300元 #
+        #3 js,400元 #
+        #4 js,500元 #`
+        console.log(jiequ.match(/^\s*#\d+\s+.+\s+#$/gm));
+        let lessons = jiequ.match(/^\s*#\d+\s+.+\s+#$/gm).map(v => {
+            v = v.replace(/\s*#\d+\s*/, '').replace(/#/, '');
+            [name, price] = v.split(',');
+            return {
+                name,
+                price
+            };
+        })
+        console.log(lessons);
+        /*  [L]匹配字母 不匹配数值   [P]匹配标点符号 [sc=Han]匹配中文*/
+        let ll = 'houdunren2020';
+        console.log(ll.match(/\p{L}/gu));
+
+        /* reg里面的一个属性lastindex获取index值 */
+        let lastindex = 'houdunren';
+        let lastindex1 = new RegExp(/\w/g);
+        console.log(lastindex.match(/\w/g));
+        while ((res = lastindex1.exec(lastindex))) {
+            console.log(res);
+        }
+        /*   console.log(lastindex1.exec(lastindex)); */
+
+
+        /* y模式 */
+
+        let y = '详细加qq群：1111111,2222222,3333333,444444'
+        let yreg = new RegExp(/(\d+),?/y);
+        yreg.lastIndex = 7;
+        let qq = [];
+        while ((res = yreg.exec(y))) {
+            qq.push(res[1])
+        }
+        console.log(qq);
+    </script>
+</body>
+
+</html>
